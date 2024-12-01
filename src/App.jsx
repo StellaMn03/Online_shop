@@ -94,7 +94,6 @@ function App() {
   const quantityDown = (product) => {
     if (product.count === 1) {
       clearFromBasket(product);
-      t;
     } else {
       setBasket(
         basket.map((item) =>
