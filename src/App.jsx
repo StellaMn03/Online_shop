@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./App.css";
+import { ProductList } from "./components/ProductList/product-list";
+import { Basket } from "./components/Basket/basket";
 
 function App() {
   const [basket, setBasket] = useState([]);
@@ -111,81 +113,13 @@ function App() {
     <div className="min-h-screen bg-gray-900 text-white">
       <h1 className="text-3xl font-bold text-center py-6">Online Shop</h1>
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((item) => (
-            <div
-              key={item.id}
-              className="bg-gray-700 rounded-lg p-4 flex flex-col items-center"
-            >
-              <img
-                src={item.photo}
-                alt={item.title}
-                className="w-24 h-24 rounded-full mb-4"
-              />
-              <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="text-sm text-gray-200">{item.category}</p>
-              <p className="font-bold">${item.price}</p>
-              <button
-                onClick={() => moveToCart(item)}
-                className="mt-4 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded"
-              >
-                Add to Basket
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className="mt-10">
-          <h2 className="text-2xl font-bold mb-4">Basket</h2>
-          <table className="w-full text-left border-collapse border border-gray-600">
-            <thead>
-              <tr className="bg-gray-800">
-                <th className="border border-gray-600 px-4 py-2">Title</th>
-                <th className="border border-gray-600 px-4 py-2">Price</th>
-                <th className="border border-gray-600 px-4 py-2">Count</th>
-                <th className="border border-gray-600 px-4 py-2">Subtotal</th>
-                <th className="border border-gray-600 px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {basket.map((item) => (
-                <tr key={item.id}>
-                  <td className="border border-gray-600 px-4 py-2">
-                    {item.title}
-                  </td>
-                  <td className="border border-gray-600 px-4 py-2">
-                    ${item.price}
-                  </td>
-                  <td className="border border-gray-600 px-4 py-2">
-                    {item.count}
-                  </td>
-                  <td className="border border-gray-600 px-4 py-2">
-                    ${(item.price * item.count).toFixed(2)}
-                  </td>
-                  <td className="border border-gray-600 px-4 py-2">
-                    <button
-                      onClick={() => quantityUp(item)}
-                      className="bg-gray-500 hover:bg-gray-600 text-white py-1 px-2 rounded"
-                    >
-                      +
-                    </button>
-                    <button
-                      onClick={() => quantityDown(item)}
-                      className="bg-gray-500 hover:bg-gray-600 text-white py-1 px-2 rounded mx-2"
-                    >
-                      -
-                    </button>
-                    <button
-                      onClick={() => clearFromBasket(item)}
-                      className="bg-gray-500 hover:bg-gray-600 text-white py-1 px-2 rounded"
-                    >
-                      x
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <ProductList items={products} onMove={moveToCart} />
+        <Basket
+          items={basket}
+          onUp={quantityUp}
+          onDown={quantityDown}
+          onClear={clearFromBasket}
+        />
       </div>
     </div>
   );
